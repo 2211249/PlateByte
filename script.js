@@ -1,3 +1,94 @@
+document.addEventListener('DOMContentLoaded', function() {
+    let cart = [];
+    const cartLink = document.getElementById('cart-link');
+    const cartCount = document.getElementById('cart-count');
+    const cartElement = document.getElementById('cart-items');
+    const totalElement = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    function addToCart(name, price) {
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({name: name, price: price, quantity: 1});
+        }
+        updateCartDisplay();
+    }
+
+    function removeFromCart(name) {
+        const index = cart.findIndex(item => item.name === name);
+        if (index !== -1) {
+            if (cart[index].quantity > 1) {
+                cart[index].quantity -= 1;
+            } else {
+                cart.splice(index, 1);
+            }
+        }
+        updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+        if (!cartElement || !totalElement || !cartCount) {
+            console.error('Cart elements not found');
+            return;
+        }
+
+        cartElement.innerHTML = '';
+        let total = 0;
+        
+        cart.forEach((item) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${item.name} - R${item.price.toFixed(2)} x ${item.quantity}
+                <button onclick="removeFromCart('${item.name}')">-</button>
+                <button onclick="addToCart('${item.name}', ${item.price})">+</button>
+            `;
+            cartElement.appendChild(li);
+            total += item.price * item.quantity;
+        });
+        
+        totalElement.textContent = `Total: R${total.toFixed(2)}`;
+        cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert('Your cart is empty');
+            return;
+        }
+        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        alert(`Thank you for your order! Total: R${total.toFixed(2)}`);
+        cart = [];
+        updateCartDisplay();
+    }
+
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', checkout);
+    } else {
+        console.error('Checkout button not found');
+    }
+
+    if (cartLink) {
+        cartLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const cartDiv = document.getElementById('cart');
+            if (cartDiv) {
+                cartDiv.style.display = cartDiv.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+    }
+
+    // Make functions global so they can be called from HTML
+    window.addToCart = addToCart;
+    window.removeFromCart = removeFromCart;
+
+    // Initial cart display update
+    updateCartDisplay();
+});
+
+
+
 /*==================== SHOW MENU ====================*/
 const showMenu = (toggleId, navId) =>{
     const toggle = document.getElementById(toggleId),

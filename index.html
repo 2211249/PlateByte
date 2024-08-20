@@ -23,14 +23,13 @@
         <header class="l-header" id="header">
             <nav class="nav bd-container">
                 <a href="#" class="nav__logo">Sambo Restaurant</a>
-
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
                         <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
                         <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
                         <li class="nav__item"><a href="#menu" class="nav__link">Menu</a></li>
-                       
+                        <li class="nav__item"><a href="#cart" class="nav__link" id="cart-link">Cart <span id="cart-count">0</span></a></li>                       
 
                         <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
                     </ul>
@@ -120,7 +119,7 @@
                         <h3 class="menu__name">Zesty Chicken</h3>
                         <span class="menu__detail">Delicious dish</span>
                         <span class="menu__preci">R40.00</span>
-                        <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a>
+                        <a href="#cart" class="button menu__button" onclick="addToCart('Zesty Chicken', 40)"><i class='bx bx-cart-alt'></i></a>
                     </div>
 
                     <div class="menu__content">
@@ -128,7 +127,7 @@
                         <h3 class="menu__name">Rosted Chicken</h3>
                         <span class="menu__detail">Delicious dish</span>
                         <span class="menu__preci">R60.00</span>
-                        <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a>
+                        <a href="#cart" class="button menu__button" onclick="addToCart('Rosted Chicken', 60)"><i class='bx bx-cart-alt'></i></a>
                     </div>
                     
                     <div class="menu__content">
@@ -136,12 +135,19 @@
                         <h3 class="menu__name">Epicurean Delight</h3>
                         <span class="menu__detail">Delicious dish</span>
                         <span class="menu__preci">R50.00</span>
-                        <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a>
+                        <a href="#cart" class="button menu__button" onclick="addToCart('Epicurean Delight', 50)"><i class='bx bx-cart-alt'></i></a>
                     </div>
                 </div>
             </section>
 
+            <!--========== CART ==========-->
             
+            <div id="cart" class="cart">
+                <h2>Your Cart</h2>
+                <ul id="cart-items"></ul>
+                <p id="cart-total">Total: R0.00</p>
+                <button id="checkout-btn" class="button">Checkout</button>
+            </div>
 
             
         </main>
@@ -198,5 +204,7 @@
 
         <!--========== MAIN JS ==========-->
         <script src="script.js"></script>
+
+        
     </body>
 </html>
